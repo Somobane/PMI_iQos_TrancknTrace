@@ -2109,6 +2109,18 @@ func (t *TnT) Query(stub shim.ChaincodeStubInterface, function string, args []st
 	} else if function == "getAssembliesByBatchNumberAndByDate" {
 		t := TnT{}
 		return t.getAssembliesByBatchNumberAndByDate(stub, args)
+	} else if function == "getPackagesByAssemblyId" {
+		t := TnT{}
+		return t.getPackagesByAssemblyId(stub, args)
+	} else if function == "getPackagesByDate" {
+		t := TnT{}
+		return t.getPackagesByDate(stub, args)
+	} else if function == "getPackageByAssemblyIdAndByDate" {
+		t := TnT{}
+		return t.getPackageByAssemblyIdAndByDate(stub, args)
+	} else if function == "getPackagesHistoryByDate" {
+		t := TnT{}
+		return t.getPackagesHistoryByDate(stub, args)
 	} 
 	
 	return nil, errors.New("Received unknown function query")
