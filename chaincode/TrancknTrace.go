@@ -496,7 +496,7 @@ func (t *TnT) getAllAssemblies(stub shim.ChaincodeStubInterface, args []string) 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE ||
+		if user_role != ASSEMBLYLINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
@@ -549,7 +549,7 @@ func (t *TnT) getAssembliesByBatchNumber(stub shim.ChaincodeStubInterface, args 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE||
+		if user_role != ASSEMBLYLINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
@@ -635,7 +635,7 @@ func (t *TnT) getAssembliesByDate(stub shim.ChaincodeStubInterface, args []strin
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE ||
+		if user_role != ASSEMBLYLINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
@@ -717,7 +717,7 @@ func (t *TnT) getAssembliesHistoryByDate(stub shim.ChaincodeStubInterface, args 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE ||
+		if user_role != ASSEMBLYLINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
@@ -813,7 +813,7 @@ func (t *TnT) getAssembliesByBatchNumberAndByDate(stub shim.ChaincodeStubInterfa
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE ||
+		if user_role != ASSEMBLYLINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
@@ -1376,7 +1376,7 @@ func (t *TnT) getAllPackages(stub shim.ChaincodeStubInterface, args []string) ([
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE ||
+		if user_role != PACKAGELINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackageLine Role")
 		}
@@ -1429,7 +1429,7 @@ func (t *TnT) getPackagesByAssemblyId(stub shim.ChaincodeStubInterface, args []s
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE ||
+		if user_role != PACKAGELINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PakagingLine Role")
 		}
@@ -1499,7 +1499,7 @@ func (t *TnT) getPackagesByDate(stub shim.ChaincodeStubInterface, args []string)
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE ||
+		if user_role != PACKAGELINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackageLine Role")
 		}
@@ -1581,7 +1581,7 @@ func (t *TnT) getPackageByAssemblyIdAndByDate(stub shim.ChaincodeStubInterface, 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE ||
+		if user_role != PACKAGELINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackageLine Role")
 		}
@@ -1670,7 +1670,7 @@ func (t *TnT) getPackagesHistoryByDate(stub shim.ChaincodeStubInterface, args []
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE ||
+		if user_role != PACKAGELINE_ROLE &&
 			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackagingLine Role")
 		}
