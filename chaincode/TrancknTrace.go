@@ -25,7 +25,7 @@ import (
 	
 	"encoding/json"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
-	//"github.com/hyperledger/fabric/core/ledger"
+
 	
 )
 
@@ -40,6 +40,7 @@ type TnT struct {
 //==============================================================================================================================
 const   ASSEMBLYLINE_ROLE  		=	"assemblyline_role"
 const   PACKAGELINE_ROLE   		=	"packageline_role"
+const   QA_VIEWER_ROLE   		=	"qaviewer_role" // new role for viewing purpose
 const   ASSEMBLYSTATUS_RFP   	=	"6" //Ready For Packaging"
 const  	ASSEMBLYSTATUS_PKG 		=	"7" //Packaged" 
 const  	ASSEMBLYSTATUS_CAN 		=	"8" //Cancelled"
@@ -495,7 +496,8 @@ func (t *TnT) getAllAssemblies(stub shim.ChaincodeStubInterface, args []string) 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE {
+		if user_role != ASSEMBLYLINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
 	}
@@ -547,7 +549,8 @@ func (t *TnT) getAssembliesByBatchNumber(stub shim.ChaincodeStubInterface, args 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE {
+		if user_role != ASSEMBLYLINE_ROLE||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
 	}
@@ -632,7 +635,8 @@ func (t *TnT) getAssembliesByDate(stub shim.ChaincodeStubInterface, args []strin
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE {
+		if user_role != ASSEMBLYLINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
 	}
@@ -713,7 +717,8 @@ func (t *TnT) getAssembliesHistoryByDate(stub shim.ChaincodeStubInterface, args 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE {
+		if user_role != ASSEMBLYLINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
 	}
@@ -808,7 +813,8 @@ func (t *TnT) getAssembliesByBatchNumberAndByDate(stub shim.ChaincodeStubInterfa
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != ASSEMBLYLINE_ROLE {
+		if user_role != ASSEMBLYLINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not AssemblyLine Role")
 		}
 	}
@@ -1370,7 +1376,8 @@ func (t *TnT) getAllPackages(stub shim.ChaincodeStubInterface, args []string) ([
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE {
+		if user_role != PACKAGELINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackageLine Role")
 		}
 	}
@@ -1422,7 +1429,8 @@ func (t *TnT) getPackagesByAssemblyId(stub shim.ChaincodeStubInterface, args []s
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE {
+		if user_role != PACKAGELINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PakagingLine Role")
 		}
 	}
@@ -1491,7 +1499,8 @@ func (t *TnT) getPackagesByDate(stub shim.ChaincodeStubInterface, args []string)
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE {
+		if user_role != PACKAGELINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackageLine Role")
 		}
 	}
@@ -1572,7 +1581,8 @@ func (t *TnT) getPackageByAssemblyIdAndByDate(stub shim.ChaincodeStubInterface, 
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE {
+		if user_role != PACKAGELINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackageLine Role")
 		}
 	}
@@ -1660,7 +1670,8 @@ func (t *TnT) getPackagesHistoryByDate(stub shim.ChaincodeStubInterface, args []
 		if ecert_role == nil {return nil, errors.New("username not defined")}
 
 		user_role := string(ecert_role)
-		if user_role != PACKAGELINE_ROLE {
+		if user_role != PACKAGELINE_ROLE ||
+			user_role != QA_VIEWER_ROLE {
 			return nil, errors.New("Permission denied not PackagingLine Role")
 		}
 	}
@@ -1816,10 +1827,11 @@ func (t *TnT) validateUpdateAssembly(stub shim.ChaincodeStubInterface, args []st
 		if user_role != ASSEMBLYLINE_ROLE {
 			return nil, errors.New("Permission denied, not an AssemblyLine Role")
 		}
+
 		// AssemblyLine can't edit an Assembly in certain statuses
 		if (user_role 			== ASSEMBLYLINE_ROLE 		&&
-		assem.AssemblyStatus 	== ASSEMBLYSTATUS_RFP) 		{
-			return nil, errors.New("Permission denied for AssemblyLine Role to update Assembly if status = 'Ready For Packaging'")
+		(assem.AssemblyStatus 	== ASSEMBLYSTATUS_RFP || assem.AssemblyStatus 	== ASSEMBLYSTATUS_CAN)){
+			return nil, errors.New("Permission denied for AssemblyLine Role to update Assembly if status = 'Ready For Packaging' or 'Cancelled'")
 		}
 		
 		// AssemblyLine user can't move an AssemblyLine from QA Failed to Ready For packaging status
@@ -1827,6 +1839,12 @@ func (t *TnT) validateUpdateAssembly(stub shim.ChaincodeStubInterface, args []st
 		assem.AssemblyStatus 	== ASSEMBLYSTATUS_QAF 		&&
 		_assemblyStatus		 	== ASSEMBLYSTATUS_RFP) 		{
 			return nil, errors.New("Permission denied for updating AssemblyLine with status = 'QA Failed' to 'Ready For Packaging' status")
+		}
+
+		// AssemblyLine user can't move an AssemblyLine to "Packaged" status directly; It is internally done in packaging line
+		if (user_role 			== ASSEMBLYLINE_ROLE 		&&
+		_assemblyStatus		 	== ASSEMBLYSTATUS_PKG) 		{
+			return nil, errors.New("Permission denied for updating AssemblyLine to status 'Packaged'")
 		}
 		
 	}
